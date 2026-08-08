@@ -1,0 +1,82 @@
+# Lightweight RBS for the public API of activejob-temporal.
+
+module ActiveJob
+  module Temporal
+    VERSION: String
+
+    def self.configure: () { (Configuration) -> void } -> Configuration
+    def self.config: () -> Configuration
+    def self.reset_configuration!: () -> Configuration
+    def self.reset_client!: () -> void
+    def self.activity_handle: (String job_id, ?activity_run_id: String?) -> untyped
+    def self.cancel: (String job_id, ?String? reason, ?activity_run_id: String?) -> void
+    def self.terminate: (String job_id, ?String? reason, ?activity_run_id: String?) -> void
+    def self.verify_sdk_capabilities!: () -> void
+
+    class Configuration
+      attr_accessor address: String?
+      attr_accessor namespace: String?
+      attr_accessor api_key: String?
+      attr_accessor tls: untyped
+      attr_accessor default_task_queue: String
+      attr_accessor default_start_to_close_timeout: Float
+      attr_accessor default_schedule_to_close_timeout: Float?
+      attr_accessor default_retry_policy: untyped
+      attr_accessor graceful_shutdown_period: Integer
+      attr_accessor data_converter: untyped
+      attr_accessor interceptors: Array[untyped]
+      attr_accessor priority_mapper: (^ (Integer?) -> untyped)?
+      attr_writer logger: Logger?
+
+      def initialize: () -> void
+      def client_manager: () -> ClientManager
+      def logger: () -> Logger
+    end
+
+    class ClientManager
+      def initialize: (Configuration config) -> void
+      def client: () -> untyped
+      def reset!: () -> void
+    end
+
+    class ExecutionActivity < Temporalio::Activity::Definition
+      def execute: (Hash[String, untyped] job_data) -> untyped
+    end
+
+    module JobOptions
+      def self.resolve: (untyped job, Configuration config) -> untyped
+    end
+
+    module PriorityMapper
+      DEFAULT_SERVER_MAX: Integer
+
+      def self.map: (Integer? value, ?max: Integer) -> untyped
+    end
+
+    class Worker
+      def self.run: (queues: Array[String], ?concurrency: Integer?, ?graceful_shutdown_period: Integer?, ?config: Configuration) -> void
+    end
+
+    class CLI
+      def self.start: (Array[String] argv) -> void
+      def initialize: (Array[String] argv) -> void
+      def run: () -> void
+    end
+  end
+
+  module QueueAdapters
+    class TemporalAdapter
+      def initialize: (?Temporal::Configuration config) -> void
+      def enqueue: (untyped job) -> untyped
+      def enqueue_at: (untyped job, Float timestamp) -> untyped
+      def enqueue_all: (Array[untyped] jobs) -> Integer
+      def enqueue_after_transaction_commit?: () -> bool
+      def stopping?: () -> bool
+    end
+  end
+
+  class Base
+    def self.temporal_options: (?Hash[Symbol, untyped] options, **untyped kwargs) -> void
+    def self.temporal_job_options: () -> Hash[Symbol, untyped]?
+  end
+end

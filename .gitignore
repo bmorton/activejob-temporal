@@ -1,0 +1,8 @@
+/.bundle/
+/pkg/
+/tmp/
+/gemfiles/.bundle/
+/gemfiles/*.gemfile.lock
+*.gem
+.rspec_status
+/spec.md

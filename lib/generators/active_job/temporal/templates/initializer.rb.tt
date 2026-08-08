@@ -1,0 +1,27 @@
+# frozen_string_literal: true
+
+ActiveJob::Temporal.configure do |config|
+  # Connection — falls back to TEMPORAL_ADDRESS / TEMPORAL_NAMESPACE env vars.
+  config.address   = ENV.fetch("TEMPORAL_ADDRESS", "localhost:7233")
+  config.namespace = ENV.fetch("TEMPORAL_NAMESPACE", "default")
+  config.api_key   = ENV["TEMPORAL_API_KEY"]           # Temporal Cloud
+  config.tls       = true if ENV["TEMPORAL_API_KEY"].present?
+
+  config.default_task_queue = "default"
+  config.default_start_to_close_timeout = 3600 # seconds
+
+  # Temporal owns durable retries by default. Do NOT also use retry_on
+  # (double-retry hazard) unless you set retry_policy max_attempts to 1.
+  config.default_retry_policy = Temporalio::RetryPolicy.new(
+    max_attempts: 25, initial_interval: 1.0, backoff_coefficient: 2.0
+  )
+
+  config.graceful_shutdown_period = 30 # seconds worker drain window
+
+  # Optional: custom data converter / payload codec for encryption at rest.
+  # config.data_converter = Temporalio::Converters::DataConverter.new(payload_codec: MyCodec.new)
+
+  # config.interceptors = [MyClientInterceptor.new]
+end
+
+Rails.application.config.active_job.queue_adapter = :temporal

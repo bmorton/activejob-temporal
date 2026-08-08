@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+gem install bundler --conservative
+bundle install
+bundle exec appraisal install

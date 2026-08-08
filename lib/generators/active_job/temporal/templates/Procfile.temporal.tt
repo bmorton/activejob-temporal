@@ -1,0 +1,3 @@
+# Start the ActiveJob-on-Temporal worker:
+#   heroku local -f Procfile.temporal
+temporal_jobs: bundle exec temporal-jobs -q default

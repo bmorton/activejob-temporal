@@ -1,0 +1,21 @@
+name: Release
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    environment: release # must match the GitHub environment configured on RubyGems
+    permissions:
+      contents: write
+      id-token: write # required for OIDC trusted publishing
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ruby
+          bundler-cache: true
+      - uses: rubygems/release-gem@v1
