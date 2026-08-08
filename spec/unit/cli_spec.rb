@@ -64,15 +64,15 @@ RSpec.describe ActiveJob::Temporal::CLI do
 
   it 'loads the app from --require path' do
     Tempfile.create(['app', '.rb']) do |f|
-      f.write("$cli_loaded_marker = true\n")
+      f.write("CLI_LOADED_MARKER = true\n")
       f.flush
       allow(ActiveJob::Temporal::Worker).to receive(:run)
 
       described_class.start(['-q', 'a', '-r', f.path])
 
-      expect($cli_loaded_marker).to be(true)
+      expect(defined?(CLI_LOADED_MARKER)).to be_truthy
     end
   ensure
-    $cli_loaded_marker = nil
+    Object.send(:remove_const, :CLI_LOADED_MARKER) if defined?(CLI_LOADED_MARKER)
   end
 end

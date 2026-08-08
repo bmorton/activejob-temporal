@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- SimpleCov with a 95% line-coverage floor; unit specs for Worker, ClientManager,
+  JobOptions, ExecutionActivity, CLI, and Railtie (adapter registration and the
+  `temporal_jobs:work` rake task), plus integration tests for duplicate-enqueue
+  conflict policy, terminating a pending activity, and multi-queue workers.
+
+### Fixed
+
+- `--concurrency` now works: `Temporalio::Worker::Tuner.create_fixed` takes
+  `activity_slots`, not `activities` (previously raised ArgumentError).
+
 - Initial release: `queue_adapter = :temporal` mapping ActiveJob onto Temporal
   Standalone Activities via a single generic `ActiveJobExecution` dispatch activity.
 - `Configuration` with env-based connection defaults and `temporal_options` per-job DSL.
