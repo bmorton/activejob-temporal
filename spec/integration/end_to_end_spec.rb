@@ -145,15 +145,16 @@ RSpec.describe 'ActiveJob on Temporal end-to-end', :integration do
     adapter = ActiveJob::QueueAdapters::TemporalAdapter.new
     job = CancelJob.new
 
-    with_worker(queues: ['integration-cancel']) do
-      adapter.enqueue_at(job, Time.now.to_f + 60)
-      # Cancellation of a pending (or already-running, when the server ignores
-      # start_delay — see README limitation) activity is accepted without error.
-      ActiveJob::Temporal.cancel(job.job_id, 'no longer needed')
+    # No worker yet: the activity sits pending in the server regardless of
+    # whether the server honors start_delay, so cancellation is deterministic.
+    adapter.enqueue_at(job, Time.now.to_f + 60)
+    ActiveJob::Temporal.cancel(job.job_id, 'no longer needed')
 
-      handle = ActiveJob::Temporal.activity_handle(job.job_id)
-      expect { handle.result }.to raise_error(Temporalio::Error::ActivityFailedError)
-    end
+    handle = ActiveJob::Temporal.activity_handle(job.job_id)
+    Timeout.timeout(30) { handle.result }
+    raise 'expected cancellation to fail the result'
+  rescue Temporalio::Error::ActivityFailedError => e
+    expect(e.message).to match(/cancel|fail/i)
   end
 
   it 'exposes the execution via temporal CLI visibility', :cli do
