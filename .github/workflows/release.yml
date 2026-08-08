@@ -11,11 +11,11 @@ jobs:
       contents: write
       id-token: write # required for OIDC trusted publishing
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@b8d447ba7506ac7e0c8fbc50762276fb3b7df731 # v1
         with:
           ruby-version: ruby
-          bundler-cache: true
-      - uses: rubygems/release-gem@v1
+          bundler-cache: false
+      - uses: rubygems/release-gem@48512b949a6517699b78f000b4f36e641d321ed3 # v1
