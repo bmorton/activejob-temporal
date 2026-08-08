@@ -11,7 +11,7 @@ module ActiveJob
       def self.run(queues:, concurrency: nil, graceful_shutdown_period: nil, config: ActiveJob::Temporal.config)
         client = config.client_manager.client
         tuner = if concurrency
-                  Temporalio::Worker::Tuner.create_fixed(activities: concurrency)
+                  Temporalio::Worker::Tuner.create_fixed(activity_slots: concurrency)
                 else
                   Temporalio::Worker::Tuner.create_fixed
                 end
