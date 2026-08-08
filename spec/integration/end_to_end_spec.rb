@@ -190,6 +190,70 @@ RSpec.describe 'ActiveJob on Temporal end-to-end', :integration do
       expect(output).to include('integration-visible')
     end
   end
+
+  it 'rejects duplicate enqueue with fail conflict policy' do
+    stub_const('DupJob', Class.new(ActiveJob::Base) do
+      queue_as 'integration-dup'
+      temporal_options(id_conflict_policy: :fail)
+
+      def self.name = 'DupJob'
+      def perform; end
+    end)
+
+    adapter = ActiveJob::QueueAdapters::TemporalAdapter.new
+    job = DupJob.new
+    adapter.enqueue(job)
+
+    dup = DupJob.new
+    dup.define_singleton_method(:job_id) { job.job_id }
+    expect { adapter.enqueue(dup) }
+      .to raise_error(Temporalio::Error::ActivityAlreadyStartedError)
+  end
+
+  it 'terminates a pending activity' do
+    stub_const('TermJob', Class.new(ActiveJob::Base) do
+      queue_as 'integration-term'
+
+      def self.name = 'TermJob'
+      def perform; end
+    end)
+
+    adapter = ActiveJob::QueueAdapters::TemporalAdapter.new
+    job = TermJob.new
+    adapter.enqueue(job) # no worker: stays pending
+
+    ActiveJob::Temporal.terminate(job.job_id, 'test terminate')
+
+    handle = ActiveJob::Temporal.activity_handle(job.job_id)
+    expect { Timeout.timeout(30) { handle.result } }
+      .to raise_error(Temporalio::Error::ActivityFailedError)
+    expect(handle.describe.raw_info.status).to eq(:ACTIVITY_EXECUTION_STATUS_TERMINATED)
+  end
+
+  it 'performs jobs from multiple queues with one worker set' do
+    performed = Queue.new
+
+    stub_const('MultiAJob', Class.new(ActiveJob::Base) do
+      queue_as 'integration-multi-a'
+      define_method(:perform) { performed << :a }
+      def self.name = 'MultiAJob'
+    end)
+    stub_const('MultiBJob', Class.new(ActiveJob::Base) do
+      queue_as 'integration-multi-b'
+      define_method(:perform) { performed << :b }
+      def self.name = 'MultiBJob'
+    end)
+
+    adapter = ActiveJob::QueueAdapters::TemporalAdapter.new
+
+    with_worker(queues: %w[integration-multi-a integration-multi-b]) do
+      adapter.enqueue(MultiAJob.new)
+      adapter.enqueue(MultiBJob.new)
+
+      results = [Timeout.timeout(30) { performed.pop }, Timeout.timeout(30) { performed.pop }]
+      expect(results).to contain_exactly(:a, :b)
+    end
+  end
 end
 
 # Minimal GlobalID-identified model without ActiveRecord.

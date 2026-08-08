@@ -1,5 +1,15 @@
 # frozen_string_literal: true
 
+# SimpleCov must be required before any project code so it can track loads.
+require 'simplecov'
+SimpleCov.start do
+  track_files 'lib/**/*.rb'
+  add_group 'Adapter', 'lib/active_job/queue_adapters'
+  add_group 'Core', 'lib/active_job/temporal'
+  add_group 'Generators', 'lib/generators'
+end
+SimpleCov.minimum_coverage 95
+
 require 'rspec'
 require 'active_job'
 require 'globalid'

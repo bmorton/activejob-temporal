@@ -5,4 +5,5 @@
 /gemfiles/*.gemfile.lock
 *.gem
 .rspec_status
+/coverage/
 /spec.md
