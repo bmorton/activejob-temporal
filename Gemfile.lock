@@ -35,6 +35,7 @@ GEM
     concurrent-ruby (1.3.8)
     connection_pool (3.0.2)
     diff-lcs (1.6.2)
+    docile (1.4.1)
     drb (2.2.3)
     globalid (1.4.0)
       activesupport (>= 6.1)
@@ -116,6 +117,12 @@ GEM
       rubocop (~> 1.86, >= 1.86.2)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.13.2)
+    simplecov_json_formatter (0.1.4)
     temporalio (1.6.0)
       google-protobuf (>= 3.25.0)
       logger
@@ -165,6 +172,7 @@ DEPENDENCIES
   rspec (~> 3.13)
   rubocop (~> 1.65)
   rubocop-rspec
+  simplecov (~> 0.22)
 
 CHECKSUMS
   activejob (8.1.3.1) sha256=1c8dd275df930df40deecffec63d913a550a33fd94bd298f69721dd96939954a
@@ -177,6 +185,7 @@ CHECKSUMS
   concurrent-ruby (1.3.8) sha256=b2f1be836e968ccc78ccfce277ea79c72a88633f22306782c16ff23fb415d1e1
   connection_pool (3.0.2) sha256=33fff5ba71a12d2aa26cb72b1db8bba2a1a01823559fb01d29eb74c286e62e0a
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
+  docile (1.4.1) sha256=96159be799bfa73cdb721b840e9802126e4e03dfc26863db73647204c727f21e
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
   globalid (1.4.0) sha256=037f12fbf1d9d7a014d501c2d5c77356fd4ddd96d7a7991d6700bba96706f427
   google-protobuf (4.35.1) sha256=a3a6471331d918f58dfa4d014a8f6286f0af2cf4840216bde52fcf2ea3fe3726
@@ -211,6 +220,9 @@ CHECKSUMS
   rubocop-rspec (3.10.2) sha256=0b3e2ecc592cd10ecbf0095bb58d1e357905276e069643523cc19eb7495f65e2
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
+  simplecov (0.22.0) sha256=fe2622c7834ff23b98066bb0a854284b2729a569ac659f82621fc22ef36213a5
+  simplecov-html (0.13.2) sha256=bd0b8e54e7c2d7685927e8d6286466359b6f16b18cb0df47b508e8d73c777246
+  simplecov_json_formatter (0.1.4) sha256=529418fbe8de1713ac2b2d612aa3daa56d316975d307244399fa4838c601b428
   temporalio (1.6.0) sha256=16f3230865fb821d1a36f94f0c0c60f08f3de176527db6f466db8d7b7c19f06f
   temporalio (1.6.0-aarch64-linux) sha256=33a2d73efe00a1e9d8e288331cfb4b4f6440952444152025b80a28118d840772
   temporalio (1.6.0-aarch64-linux-musl) sha256=a831b2f7ebb23214b991b5cf6c5bd22ba044216b4e06d4a8db8aba24bafa8ba4
