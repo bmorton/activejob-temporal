@@ -53,7 +53,6 @@ GEM
     connection_pool (3.0.2)
     crass (1.0.7)
     diff-lcs (1.6.2)
-    docile (1.4.1)
     drb (2.2.3)
     erb (6.0.7)
     erubi (1.13.1)
@@ -200,12 +199,7 @@ GEM
       rubocop (~> 1.86, >= 1.86.2)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
-    simplecov (0.22.0)
-      docile (~> 1.1)
-      simplecov-html (~> 0.11)
-      simplecov_json_formatter (~> 0.1)
-    simplecov-html (0.13.2)
-    simplecov_json_formatter (0.1.4)
+    simplecov (1.1.0)
     temporalio (1.6.0)
       google-protobuf (>= 3.25.0)
       logger
@@ -259,7 +253,7 @@ DEPENDENCIES
   rspec (~> 3.13)
   rubocop (~> 1.65)
   rubocop-rspec
-  simplecov (~> 0.22)
+  simplecov (~> 1.1)
 
 CHECKSUMS
   actionpack (8.1.3.1) sha256=974cb7154548e81f470b1b0f247b99cb38e87825899dca58610596e2817723d0
@@ -276,7 +270,6 @@ CHECKSUMS
   connection_pool (3.0.2) sha256=33fff5ba71a12d2aa26cb72b1db8bba2a1a01823559fb01d29eb74c286e62e0a
   crass (1.0.7) sha256=94868719948664c89ddcaf0a37c65048413dfcb1c869470a5f7a7ceb5390b295
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
-  docile (1.4.1) sha256=96159be799bfa73cdb721b840e9802126e4e03dfc26863db73647204c727f21e
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
   erb (6.0.7) sha256=c5ca6dc25b0ef974a44dc8f59fe847577122483b1968a38dec305c60bf91ee92
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
@@ -336,9 +329,7 @@ CHECKSUMS
   rubocop-rspec (3.10.2) sha256=0b3e2ecc592cd10ecbf0095bb58d1e357905276e069643523cc19eb7495f65e2
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
-  simplecov (0.22.0) sha256=fe2622c7834ff23b98066bb0a854284b2729a569ac659f82621fc22ef36213a5
-  simplecov-html (0.13.2) sha256=bd0b8e54e7c2d7685927e8d6286466359b6f16b18cb0df47b508e8d73c777246
-  simplecov_json_formatter (0.1.4) sha256=529418fbe8de1713ac2b2d612aa3daa56d316975d307244399fa4838c601b428
+  simplecov (1.1.0) sha256=30f12f31a659c377ef402d5463a50eaf9037035fe1fac3d263cb389682cae1b4
   temporalio (1.6.0) sha256=16f3230865fb821d1a36f94f0c0c60f08f3de176527db6f466db8d7b7c19f06f
   temporalio (1.6.0-aarch64-linux) sha256=33a2d73efe00a1e9d8e288331cfb4b4f6440952444152025b80a28118d840772
   temporalio (1.6.0-aarch64-linux-musl) sha256=a831b2f7ebb23214b991b5cf6c5bd22ba044216b4e06d4a8db8aba24bafa8ba4
