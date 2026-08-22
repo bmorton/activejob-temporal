@@ -33,5 +33,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'temporalio', '>= 1.3', '< 2.0'
 
   spec.add_development_dependency 'railties', '>= 7.2', '< 9.0'
-  spec.add_development_dependency 'simplecov', '~> 0.22'
+  spec.add_development_dependency 'simplecov', '~> 1.1'
 end
