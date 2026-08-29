@@ -8,7 +8,7 @@ group :development, :test do
   gem 'globalid', '>= 1.0'
   gem 'rake', '~> 13.0'
   gem 'rspec', '~> 3.13'
-  gem 'rubocop', '~> 1.65', require: false
+  gem 'rubocop', '~> 1.90', require: false
   gem 'rubocop-rspec', require: false
 end
 
